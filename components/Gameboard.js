@@ -57,7 +57,6 @@ const Gameboard = ({ navigation, route }) => {
     useEffect(() => {
         if (selectedDicePoints.every(point => point)) {
             const finalScore = calculateTotalScore();
-            console.log('Final score after all points selected:', finalScore);
             savePlayerPoints(finalScore);
             setStatus('Game Over! All categories have been used.');
         }
@@ -140,7 +139,6 @@ const Gameboard = ({ navigation, route }) => {
 
                 if (updatedPointsTotal[i] > 0) {
                     const finalScore = calculateTotalScore();
-                    console.log('Final score before saving:', finalScore);
                     setGameEndStatus(updatedSelectedPoints.every(point => point));
                     if (updatedSelectedPoints.every(point => point)) {
                         setStatus('Game Over! All categories have been used.');
