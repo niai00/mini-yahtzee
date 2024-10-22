@@ -31,6 +31,7 @@ const Gameboard = ({ navigation, route }) => {
     const [isSelectingPoints, setIsSelectingPoints] = useState(false);
     const [isGameOver, setIsGameOver] = useState(false);
     const [board, setBoard] = useState(new Array(NBR_OF_DICES).fill(''));
+    const [hasThrownDices, setHasThrownDices] = useState(false);
 
     useEffect(() => {
         if (playerName === '' && route.params?.player) {
@@ -68,10 +69,9 @@ const Gameboard = ({ navigation, route }) => {
         setIsGameOver(true);
     };
 
-    const savePlayerPoints = async () => {
+    const savePlayerPoints = async (totalScore) => {
         const newKey = scores.length + 1;
         const currentDate = new Date();
-        const totalScore = calculateTotalScore();
 
         const playerPoints = {
             key: newKey,
@@ -106,6 +106,11 @@ const Gameboard = ({ navigation, route }) => {
         }
     };
 
+    const calculateTotalScore = () => {
+        const total = dicePointsTotal.reduce((sum, points) => sum + points, 0);
+        return total >= BONUS_POINTS_LIMIT ? total + BONUS_POINTS : total;
+    };
+
     const chooseDicePoints = (i) => {
         if (nbrOfThrowsLeft === 0 && !gameEndStatus) {
             const updatedSelectedPoints = [...selectedDicePoints];
@@ -124,24 +129,34 @@ const Gameboard = ({ navigation, route }) => {
                 setDiceSpots(new Array(NBR_OF_DICES).fill(0));
                 setStatus('Throw dices.');
 
-                if (updatedSelectedPoints.every(point => point)) {
-                    setGameEndStatus(true);
-                    setStatus('Game Over! All categories have been used.');
-                    savePlayerPoints();
+                if (updatedPointsTotal[i] > 0) {
+                    const finalScore = calculateTotalScore();
+                    console.log('Final score before saving:', finalScore);
+                    setGameEndStatus(updatedSelectedPoints.every(point => point));
+                    if (updatedSelectedPoints.every(point => point)) {
+                        setStatus('Game Over! All categories have been used.');
+                        savePlayerPoints(finalScore);
+                    } else {
+                        setIsSelectingPoints(true);
+                    }
                 }
-
-                setIsSelectingPoints(true);
             } else {
                 setStatus("You have already selected points for " + (i + 1));
             }
-        } else {
+        } else if (nbrOfThrowsLeft > 0) {
             setStatus("Throw the dices " + NBR_OF_THROWS + " times before setting points.");
         }
     };
 
+
     const throwDices = () => {
         if (gameEndStatus) {
             setStatus("The game has ended.");
+            return;
+        }
+
+        if (nbrOfThrowsLeft <= 0) {
+            setStatus("No throws left!");
             return;
         }
 
@@ -162,11 +177,7 @@ const Gameboard = ({ navigation, route }) => {
         setStatus('Select and throw the dices again.');
         setPointsSaved(false);
         setIsSelectingPoints(false);
-    };
-
-    const calculateTotalScore = () => {
-        const total = dicePointsTotal.reduce((sum, points) => sum + points, 0);
-        return total >= BONUS_POINTS_LIMIT ? total + BONUS_POINTS : total;
+        setHasThrownDices(true);
     };
 
     const handlePlayAgain = () => {
@@ -179,6 +190,7 @@ const Gameboard = ({ navigation, route }) => {
         setStatus('Throw the dices.');
         setBonusStatus('');
         setBoard(new Array(NBR_OF_DICES).fill('dice-1'));
+        setHasThrownDices(false);
 
         console.log('Game reset, ready to play again.');
     };
@@ -234,16 +246,15 @@ const Gameboard = ({ navigation, route }) => {
 
     return (
         <>
-
             <Header />
             <View style={styles.container}>
                 <Container>
-                    {!isSelectingPoints ? (
-                        <Row>{dicesRow}</Row>
-                    ) : (
+                    {isSelectingPoints || gameEndStatus || !hasThrownDices ? (
                         <View style={{ alignItems: 'center', marginVertical: 20 }}>
                             <MaterialCommunityIcons name="dice-multiple-outline" size={50} color="black" />
                         </View>
+                    ) : (
+                        <Row>{dicesRow}</Row>
                     )}
                 </Container>
 
@@ -296,4 +307,3 @@ const Gameboard = ({ navigation, route }) => {
 };
 
 export default Gameboard;
-
