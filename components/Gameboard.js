@@ -54,6 +54,15 @@ const Gameboard = ({ navigation, route }) => {
         }
     }, [dicePointsTotal]);
 
+    useEffect(() => {
+        if (selectedDicePoints.every(point => point)) {
+            const finalScore = calculateTotalScore();
+            console.log('Final score after all points selected:', finalScore);
+            savePlayerPoints(finalScore);
+            setStatus('Game Over! All categories have been used.');
+        }
+    }, [selectedDicePoints]);
+
     const getScoreboardData = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem(SCOREBOARD_KEY);
