@@ -23,7 +23,6 @@ export default Scoreboard = ({ navigation }) => {
             const jsonValue = await AsyncStorage.getItem(SCOREBOARD_KEY);
             if (jsonValue !== null) {
                 const tmpScores = JSON.parse(jsonValue);
-                // Sort scores based on totalScore in descending order
                 tmpScores.sort((a, b) => b.totalScore - a.totalScore);
                 setScores(tmpScores);
             }
@@ -45,13 +44,12 @@ export default Scoreboard = ({ navigation }) => {
         <>
             <Header />
             <View style={styles.scrollView}>
-
+            <MaterialCommunityIcons name="format-list-bulleted" size={50} color="black" />
                 {scores.length === 0 ? (
                     <Text style={styles.noScoresText}>No scores available.</Text>
                 ) : (
                     <ScrollView>
                         <View style={{ alignItems: 'center'}}>
-                            <MaterialCommunityIcons name="format-list-bulleted" size={50} color="grey" />
                         </View>
                         <Text style={styles.scrollViewTitle}>Top Seven</Text>
                         {scores.slice(0, 7).map((item, index) => (
@@ -70,12 +68,13 @@ export default Scoreboard = ({ navigation }) => {
                                 </Text>
                             </View>
                         ))}
-                    </ScrollView>
+                    <Pressable style={styles.clearButton} onPress={clearScoreBoard}>
+                        <Text style={styles.buttonText}>Clear Scoreboard</Text>
+                    </Pressable>
+                    </ScrollView>                
                 )}
 
-                <Pressable style={styles.clearButton} onPress={clearScoreBoard}>
-                    <Text style={styles.buttonText}>Clear Scoreboard</Text>
-                </Pressable>
+
             </View>
             <Footer />
         </>

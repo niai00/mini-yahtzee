@@ -5,7 +5,6 @@
 //npm install --save react-native-flex-grid
 //npm install @react-native-async-storage/async-storage
 //npm install react-native-paper
-//expo install expo-font @expo-google-fonts/poppins
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './components/Home';
 import Gameboard from './components/Gameboard';

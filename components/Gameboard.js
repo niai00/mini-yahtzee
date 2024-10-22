@@ -226,6 +226,12 @@ const Gameboard = ({ navigation, route }) => {
         </Col>
     ));
 
+    const endBonusstatus = () => {
+        if (bonusStatus == 'You have earned the bonus points!') {
+            return ('You have earned the bonus points!')
+        }
+    }
+
     return (
         <>
 
@@ -269,15 +275,16 @@ const Gameboard = ({ navigation, route }) => {
                 <Container>
                     <Row>{pointsToSelectRow}</Row>
                 </Container>
-                <Text>Player: {playerName}</Text>
+                <Text style={styles.playerName}>Player: {playerName}</Text>
 
                 {gameEndStatus && (
                     <View style={styles.gameEndContainer}>
                         <Text style={styles.gameEndText}>
                             Game Over! Your final score is {calculateTotalScore()}.
                         </Text>
+                        <Text>{endBonusstatus()}</Text>
                         <Pressable style={styles.playAgain} onPress={handlePlayAgain}>
-                            <Text style={styles.buttonText}>Play Again</Text>
+                            <Text style={styles.buttonText}>PLAY AGAIN</Text>
                         </Pressable>
                     </View>
                 )}

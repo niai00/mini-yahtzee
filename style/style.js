@@ -18,7 +18,6 @@ export default StyleSheet.create({
     flex: 0.75,
     borderBottomColor: 'black',
     borderBottomWidth: moderateScale(2),
-    fontFamily: 'serif'
   },
   footer: {
     backgroundColor: 'cadetblue',
@@ -103,6 +102,7 @@ export default StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: moderateScale(5),
     elevation: 3,
+    borderWidth: verticalScale(1)
   },
   throwsLeft: {
     fontSize: moderateScale(20),
@@ -110,13 +110,26 @@ export default StyleSheet.create({
   },
   throwButton: {
     borderRadius: moderateScale(10),
+    borderWidth: moderateScale(1),
     shadowColor: 'black',
     shadowOffset: { width: 0, height: verticalScale(2) },
     shadowOpacity: 0.1,
     shadowRadius: moderateScale(5),
     elevation: 3,
-    padding: verticalScale(5)
-
+    alignItems: 'center',
+    padding: verticalScale(10),
+    width: verticalScale(180)
+  },
+  playerName: {
+    backgroundColor: '#ebce8f',
+    borderColor: 'black',
+    borderWidth: moderateScale(1),
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: verticalScale(2) },
+    shadowOpacity: 0.1,
+    shadowRadius: moderateScale(5),
+    elevation: 3,
+    padding: verticalScale(5),
   },
   playAgain: {
     margin: verticalScale(40),
@@ -125,6 +138,12 @@ export default StyleSheet.create({
     backgroundColor: 'cadetblue',
     borderRadius: moderateScale(15),
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: verticalScale(2) },
+    shadowOpacity: 0.1,
+    shadowRadius: moderateScale(5),
+    elevation: 3,
+    borderWidth: verticalScale(1)
   },
   pointRow: {
     justifyContent: 'center',
@@ -132,12 +151,12 @@ export default StyleSheet.create({
     marginLeft: horizontalScale(20),
   },
   totalPointsText: {
-    borderColor: '#ccc',
+    borderColor: '#b7c443',
     borderWidth: 1,
     paddingHorizontal: horizontalScale(15),
     fontSize: moderateScale(20),
     fontWeight: 'bold',
-    color: '#333',
+    color: 'black',
     backgroundColor: '#d7eb8f',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: verticalScale(2) },
@@ -161,7 +180,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     fontWeight: 'bold',
     fontSize: moderateScale(25),
-    marginBottom: verticalScale(10),
+    marginBottom: verticalScale(30),
   },
   scrollView: {
     backgroundColor: '#f3de98',
@@ -171,6 +190,13 @@ export default StyleSheet.create({
   scoreItem: {
     margin: verticalScale(5),
     flexDirection: 'row',
+    backgroundColor: '#bde0cd',
+    padding: horizontalScale(15),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: verticalScale(2) },
+    shadowOpacity: 0.1,
+    shadowRadius: moderateScale(5),
+    elevation: 3,
   },
   textItem: {
     paddingRight: horizontalScale(30),
@@ -191,7 +217,12 @@ export default StyleSheet.create({
   clearButton: {
     borderRadius: moderateScale(10),
     backgroundColor: '#9e2b2b',
-    margin: verticalScale(20),
+    marginTop: verticalScale(20),
     padding: verticalScale(10),
+    alignItems: 'center'
   },
+  noScoresText: {
+    alignItems: 'center',
+    marginTop: '50%'
+  }
 });
